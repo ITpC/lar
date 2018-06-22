@@ -112,7 +112,7 @@ namespace lar
         {
           archive.seekg(archive_offset);
           
-          for(auto item : items)
+          for(auto& item : items)
           {
             itc::CompressionBuffer arhived_file=std::make_shared<itc::ByteArray>(item->compressedSize);
             archive.read((char*)(arhived_file->data()),item->compressedSize);
@@ -215,7 +215,7 @@ namespace lar
       
       itc::CompressionBuffer TOC=std::make_shared<itc::ByteArray>();
       
-      for(auto item : items)
+      for(auto& item : items)
       {
         std::vector<uint8_t> toc_item;
         item->dump(toc_item);
@@ -260,7 +260,7 @@ namespace lar
           
         }else{
           char nbuff[4096];
-          for(size_t i=0;i<content_buff_len/4096;++i)
+          for(size_t i=0;i<static_cast<size_t>(content_buff_len/4096);++i)
           {
             ::read(fd,nbuff,4096);
             archive.write(nbuff,4096);
