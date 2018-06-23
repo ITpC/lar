@@ -127,10 +127,12 @@ namespace lar
               fs::path subdir_path=file_path.parent_path();
               std::error_code ec;
               fs::create_directories(subdir_path,ec);
+              
               if(ec.value() != 0)
               {
                 throw std::system_error(ec.value(),ec.category(),"Can not create directory: "+subdir_path.u8string()+". Error: "+ec.message());
               }
+              
               std::ofstream thefile(file_path,std::ios_base::out|std::ios_base::binary);
               if(thefile&&thefile.is_open())
               {
@@ -149,6 +151,8 @@ namespace lar
             }
           }
         }
+      }else{
+        throw std::system_error(EINVAL,std::system_category(),"Can't read TOC");
       }
     }
     
