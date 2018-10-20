@@ -120,7 +120,8 @@ help: .help-post
 # Add your post 'help' code here...
 
 install: build
-	install -m 0755 ${CND_ARTIFACT_PATH_${CONF}} /opt/lapps/bin
+	mkdir -p /opt/lapps/bin
+	install -m 0755 ${CND_ARTIFACT_PATH_${CONF}} /opt/lapps/bin/
 
 # include project implementation makefile
 include nbproject/Makefile-impl.mk
