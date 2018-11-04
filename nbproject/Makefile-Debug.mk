@@ -69,6 +69,8 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../ITCLib && ${MAKE}  -f Makefile CONF=Release.SSE2
+	cd ../ITCFramework && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -76,6 +78,8 @@ ${OBJECTDIR}/main.o: main.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd ../ITCLib && ${MAKE}  -f Makefile CONF=Release.SSE2 clean
+	cd ../ITCFramework && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
