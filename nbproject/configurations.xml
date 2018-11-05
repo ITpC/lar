@@ -45,9 +45,10 @@
             <pElem>../utils/include</pElem>
             <pElem>.</pElem>
           </incDir>
-          <commandLine>-std=c++17</commandLine>
+          <commandLine>-std=c++17 -march=core2 -mtune=generic</commandLine>
         </ccTool>
         <linkerTool>
+          <commandlineTool>g++ -march=core2 -mtune=generic</commandlineTool>
           <commandLine>-lstdc++fs -lbz2 -lcryptopp</commandLine>
         </linkerTool>
         <requiredProjects>
