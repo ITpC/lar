@@ -29,7 +29,7 @@
 namespace fs = std::experimental::filesystem::v1;
 
 namespace lar{
-  typedef ::byte sha256sum[CryptoPP::SHA256::DIGESTSIZE];
+  typedef CryptoPP::byte sha256sum[CryptoPP::SHA256::DIGESTSIZE];
   
   struct TOCItem
   {
