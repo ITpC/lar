@@ -57,7 +57,7 @@ namespace lar
       {
         if(dentry.status().type() == fs::file_type::regular)
         {
-          items.push_back(std::move(std::make_shared<TOCItem>(dentry.path())));
+          items.push_back(std::make_shared<TOCItem>(dentry.path()));
           std::cout << "New archive entry: " << dentry.path() << std::endl;
         }
       }
