@@ -52,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L/usr/local/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -60,7 +60,7 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	g++ -march=core2 -mtune=generic -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -lstdc++fs -lbz2 -lcryptopp
+	g++ -march=core2 -mtune=generic -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -lstdc++fs -lbz2 -lcryptopp -lmimalloc
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}

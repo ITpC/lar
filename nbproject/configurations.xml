@@ -48,8 +48,11 @@
           <commandLine>-std=c++17 -march=core2 -mtune=generic</commandLine>
         </ccTool>
         <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
           <commandlineTool>g++ -march=core2 -mtune=generic</commandlineTool>
-          <commandLine>-lstdc++fs -lbz2 -lcryptopp</commandLine>
+          <commandLine>-lstdc++fs -lbz2 -lcryptopp -lmimalloc</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
