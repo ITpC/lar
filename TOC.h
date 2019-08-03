@@ -45,6 +45,7 @@ namespace lar{
       compressedSize(0),
       path_size(_path.u8string().length()),
       permissions(fs::status(_path).permissions()),
+      hashsum{0,},
       relativePath(_path)
     {
     }
