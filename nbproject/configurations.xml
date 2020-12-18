@@ -7,6 +7,7 @@
       <itemPath>LAR.h</itemPath>
       <itemPath>TOC.h</itemPath>
       <itemPath>utils.h</itemPath>
+      <itemPath>wolfCryptHaCW.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -45,14 +46,20 @@
             <pElem>../utils/include</pElem>
             <pElem>.</pElem>
           </incDir>
-          <commandLine>-std=c++17 -march=core2 -mtune=generic</commandLine>
+          <commandLine>-pipe -O2 -Wall -std=c++17 -march=nocona -mtune=generic -mfpmath=sse -msse2</commandLine>
+          <preprocessorList>
+            <Elem>DTFM_TIMING_RESISTANT</Elem>
+            <Elem>ECC_TIMING_RESISTANT</Elem>
+            <Elem>WC_RSA_BLINDING</Elem>
+            <Elem>WOLFSSL_TLS13</Elem>
+          </preprocessorList>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <commandlineTool>g++ -march=core2 -mtune=generic</commandlineTool>
-          <commandLine>-lstdc++fs -lbz2 -lcryptopp -lmimalloc</commandLine>
+          <commandLine>-flto -lstdc++fs -lbz2 -lmimalloc -lwolfssl</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
@@ -95,6 +102,8 @@
       </item>
       <item path="utils.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="wolfCryptHaCW.h" ex="false" tool="3" flavor2="0">
+      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
@@ -124,6 +133,8 @@
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="wolfCryptHaCW.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

@@ -16,11 +16,7 @@
 #include <vector>
 #include <memory>
 #include <experimental/filesystem>
-
-#include <cryptopp/sha.h>
-#include <cryptopp/filters.h>
-#include <cryptopp/base64.h>
-
+#include <wolfCryptHaCW.h>
 #include <bz2Compression.h>
 #include <fstream>
 
@@ -29,7 +25,6 @@
 namespace fs = std::experimental::filesystem::v1;
 
 namespace lar{
-  typedef CryptoPP::byte sha256sum[CryptoPP::SHA256::DIGESTSIZE];
   
   struct TOCItem
   {
@@ -37,7 +32,7 @@ namespace lar{
     size_t                  compressedSize;
     uint32_t                path_size;
     fs::perms               permissions;
-    sha256sum               hashsum;
+    wolf::SHA256SUM         hashsum;
     fs::path                relativePath;
     
     explicit TOCItem(const fs::path& _path)
@@ -71,8 +66,7 @@ namespace lar{
     
     void calcHashSum(const std::vector<uint8_t>& content)
     {
-      CryptoPP::SHA256 sha256;
-      sha256.CalculateDigest(hashsum,content.data(),content.size());
+      wolf::sha256sum(content,hashsum);
     }
     void dump(std::vector<uint8_t>& out)
     {

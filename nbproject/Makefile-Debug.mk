@@ -42,8 +42,8 @@ OBJECTFILES= \
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-std=c++17 -march=core2 -mtune=generic
-CXXFLAGS=-std=c++17 -march=core2 -mtune=generic
+CCFLAGS=-pipe -O2 -Wall -std=c++17 -march=nocona -mtune=generic -mfpmath=sse -msse2
+CXXFLAGS=-pipe -O2 -Wall -std=c++17 -march=nocona -mtune=generic -mfpmath=sse -msse2
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -60,12 +60,12 @@ LDLIBSOPTIONS=-L/usr/local/lib
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	g++ -march=core2 -mtune=generic -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -lstdc++fs -lbz2 -lcryptopp -lmimalloc
+	g++ -march=core2 -mtune=generic -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -flto -lstdc++fs -lbz2 -lmimalloc -lwolfssl
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I../ITCLib/include -I../ITCFramework/include -I../utils/include -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -DWOLFSSL_TLS13 -DDTFM_TIMING_RESISTANT -DECC_TIMING_RESISTANT -DWC_RSA_BLINDING -I../ITCLib/include -I../ITCFramework/include -I../utils/include -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

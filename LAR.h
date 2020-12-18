@@ -17,7 +17,7 @@
 #include <fstream>
 #include <cassert>
 #include <vector>
-
+#include <wolfCryptHaCW.h>
 #include <TOC.h>
 
 namespace lar
@@ -29,7 +29,7 @@ namespace lar
     uint32_t TOCSize;
     uint32_t TOCCompressedSize;
     uint32_t TOCItems;
-    sha256sum hashsum;
+    wolf::SHA256SUM hashsum;
     
     LARHeader() : magic{'L','A','R'},version{1},
     TOCSize{0},TOCCompressedSize{0},TOCItems{0},hashsum{0}{};
@@ -118,9 +118,9 @@ namespace lar
             archive.read((char*)(arhived_file->data()),item->compressedSize);
             itc::CompressionBuffer unpacked_file=std::make_shared<itc::ByteArray>(item->fsize);
             itc::bz2::decompress(arhived_file,unpacked_file);
-            CryptoPP::SHA256 sha256;
-            sha256sum hashsum;
-            sha256.CalculateDigest(hashsum,unpacked_file->data(),unpacked_file->size());
+
+            wolf::SHA256SUM hashsum;
+            wolf::sha256sum(*unpacked_file,hashsum);
             if(memcmp(hashsum,item->hashsum,32) == 0)
             {
               fs::path file_path=p / item->relativePath;
@@ -203,7 +203,17 @@ namespace lar
           itc::CompressionBuffer  compressedContent=std::make_shared<itc::ByteArray>();
           itc::bz2::compress(filebuff,compressedContent);
           item->compressedSize=compressedContent->size();
-          ::write(fd,compressedContent->data(),compressedContent->size());    
+          auto ret=::write(fd,compressedContent->data(),compressedContent->size());
+          if(ret == -1)
+          {
+            throw std::system_error(
+              errno,
+              std::system_category(),
+              std::string("File [")+
+                item->relativePath.u8string()+
+                std::string("] error on writing to archive ")+archname
+            );
+          }
         }
         else{
           throw std::system_error(
@@ -214,8 +224,8 @@ namespace lar
         }
         file.close();
       }
-      CryptoPP::SHA256 sha256;
-      sha256.CalculateDigest(header.hashsum,checksums.data(),checksums.size());
+      
+      wolf::sha256sum(checksums,header.hashsum);
       
       itc::CompressionBuffer TOC=std::make_shared<itc::ByteArray>();
       
@@ -231,7 +241,15 @@ namespace lar
       itc::bz2::compress(TOC,compressedTOC);
       header.TOCCompressedSize=compressedTOC->size();
       
-      ::write(ffd,compressedTOC->data(),compressedTOC->size());
+      auto ret=::write(ffd,compressedTOC->data(),compressedTOC->size());
+      if(ret == -1)
+      {
+        throw std::system_error(
+          errno,
+          std::system_category(),
+          std::string("error on writing TOC to archive ")+archname
+        );
+      }
       
       std::ofstream archive(fs::current_path() / archname, std::ios_base::out|std::ios_base::binary);
       
@@ -245,7 +263,15 @@ namespace lar
         // read TOC from temp file
         lseek(ffd,0,SEEK_SET);
         char buff[buff_len];
-        ::read(ffd,buff,buff_len);
+        auto ret=::read(ffd,buff,buff_len);
+        if(ret == -1)
+        {
+          throw std::system_error(
+            errno,
+            std::system_category(),
+            std::string("error on reading from archive ")+archname
+          );
+        }
         
         // write TOC into archive.
         archive.write(buff,buff_len);
@@ -259,18 +285,42 @@ namespace lar
         if(content_buff_len < 4096)
         {
           char nbuff[content_buff_len];
-          ::read(fd,nbuff,content_buff_len);
+          auto ret=::read(fd,nbuff,content_buff_len);
+          if(ret == -1)
+          {
+            throw std::system_error(
+              errno,
+              std::system_category(),
+              std::string("error on reading from archive ")+archname
+            );
+          }
           archive.write(nbuff,content_buff_len);
           
         }else{
           char nbuff[4096];
           for(size_t i=0;i<static_cast<size_t>(content_buff_len/4096);++i)
           {
-            ::read(fd,nbuff,4096);
+            auto ret=::read(fd,nbuff,4096);
+            if(ret == -1)
+            {
+              throw std::system_error(
+                errno,
+                std::system_category(),
+                std::string("error on reading from archive ")+archname
+              );
+            }
             archive.write(nbuff,4096);
           }
           size_t last_chunk=(content_buff_len-static_cast<size_t>(content_buff_len/4096)*4096);
-          ::read(fd,nbuff,last_chunk);
+          auto ret=::read(fd,nbuff,last_chunk);
+          if(ret == -1)
+          {
+            throw std::system_error(
+              errno,
+              std::system_category(),
+              std::string("error on reading from archive ")+archname
+            );
+          }
           archive.write(nbuff,last_chunk);
         }
         close(fd);
