@@ -40,7 +40,7 @@
       </toolsSet>
       <compileType>
         <ccTool>
-          <commandlineTool>g++ -std=c++17</commandlineTool>
+          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
           <incDir>
             <pElem>../ITCLib/include</pElem>
             <pElem>../ITCFramework/include</pElem>
@@ -59,7 +59,8 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandLine>-std=c++17 -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
+          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
+          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
@@ -117,7 +118,7 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <commandlineTool>g++ -std=c++17</commandlineTool>
+          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
           <incDir>
             <pElem>../ITCLib/include</pElem>
             <pElem>../ITCFramework/include</pElem>
@@ -142,7 +143,8 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandLine>-std=c++17 -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
+          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
+          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
         </linkerTool>
       </compileType>
       <item path="LAR.h" ex="false" tool="3" flavor2="0">
