@@ -59,7 +59,7 @@
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
           <commandlineTool>g++ -march=core2 -mtune=generic</commandlineTool>
-          <commandLine>-flto -lstdc++fs -lbz2 -lmimalloc -lwolfssl</commandLine>
+          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
