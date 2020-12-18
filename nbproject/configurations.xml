@@ -40,26 +40,26 @@
       </toolsSet>
       <compileType>
         <ccTool>
+          <commandlineTool>g++ -std=c++17</commandlineTool>
           <incDir>
             <pElem>../ITCLib/include</pElem>
             <pElem>../ITCFramework/include</pElem>
             <pElem>../utils/include</pElem>
             <pElem>.</pElem>
           </incDir>
-          <commandLine>-pipe -O2 -Wall -std=c++17 -march=nocona -mtune=generic -mfpmath=sse -msse2</commandLine>
           <preprocessorList>
             <Elem>DTFM_TIMING_RESISTANT</Elem>
             <Elem>ECC_TIMING_RESISTANT</Elem>
             <Elem>WC_RSA_BLINDING</Elem>
             <Elem>WOLFSSL_TLS13</Elem>
           </preprocessorList>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandlineTool>g++ -march=core2 -mtune=generic</commandlineTool>
-          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs</commandLine>
+          <commandLine>-std=c++17 -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
@@ -117,7 +117,20 @@
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
-          <standard>11</standard>
+          <commandlineTool>g++ -std=c++17</commandlineTool>
+          <incDir>
+            <pElem>../ITCLib/include</pElem>
+            <pElem>../ITCFramework/include</pElem>
+            <pElem>../utils/include</pElem>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>DTFM_TIMING_RESISTANT</Elem>
+            <Elem>ECC_TIMING_RESISTANT</Elem>
+            <Elem>WC_RSA_BLINDING</Elem>
+            <Elem>WOLFSSL_TLS13</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -125,6 +138,12 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <commandLine>-std=c++17 -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
+        </linkerTool>
       </compileType>
       <item path="LAR.h" ex="false" tool="3" flavor2="0">
       </item>
