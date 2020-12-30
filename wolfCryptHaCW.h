@@ -35,6 +35,7 @@
 
 namespace wolf
 {
+  
   static auto base64encode(const std::string_view src, std::string& out)
   {
     uint32_t osz=(src.size()*4)/3+10;
@@ -43,6 +44,7 @@ namespace wolf
     out.resize(osz-1);
     return ret;
   }
+
   
   static auto base64encode(const std::vector<uint8_t>& src, std::vector<uint8_t>& out)
   {
@@ -52,6 +54,7 @@ namespace wolf
     out.resize(osz-1);
     return ret;
   }
+  
   
   static auto base64encode(const std::vector<uint8_t>& src, std::string& out)
   {
@@ -123,7 +126,7 @@ static void sha256sum(const std::vector<uint8_t>& src, std::vector<uint8_t>& sum
     wc_InitSha256(&sha);
     wc_Sha256Update(&sha, (const byte*)(src.data()), src.length());
     wc_Sha256Final(&sha, sum);
-  }  
+  }
   
   static void sha256sum(const std::vector<uint8_t>& src, SHA256SUM& sum)
   {
