@@ -60,17 +60,16 @@ LDLIBSOPTIONS=-L/usr/local/lib
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	g++ -std=c++17 -pthread -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2
+	g++ -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/lar ${OBJECTFILES} ${LDLIBSOPTIONS} -std=c++17 -pthread -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -Wall -DDTFM_TIMING_RESISTANT -DECC_TIMING_RESISTANT -DWC_RSA_BLINDING -DWOLFSSL_TLS13 -I../ITCLib/include -I../ITCFramework/include -I../utils/include -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -Wall -DDTFM_TIMING_RESISTANT -DECC_TIMING_RESISTANT -DWC_RSA_BLINDING -DWOLFSSL_TLS13 -I../ITCLib/include -I../utils/include -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:
 	cd ../ITCLib && ${MAKE}  -f Makefile CONF=Release.SSE2
-	cd ../ITCFramework && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -79,7 +78,6 @@ ${OBJECTDIR}/main.o: main.cpp
 # Subprojects
 .clean-subprojects:
 	cd ../ITCLib && ${MAKE}  -f Makefile CONF=Release.SSE2 clean
-	cd ../ITCFramework && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

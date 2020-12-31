@@ -43,7 +43,6 @@
           <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
           <incDir>
             <pElem>../ITCLib/include</pElem>
-            <pElem>../ITCFramework/include</pElem>
             <pElem>../utils/include</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -59,8 +58,8 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
-          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
+          <commandlineTool>g++</commandlineTool>
+          <commandLine>-std=c++17 -pthread -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
         </linkerTool>
         <requiredProjects>
           <makeArtifact PL="../ITCLib"
@@ -72,16 +71,6 @@
                         BC="${MAKE}  -f Makefile CONF=Release.SSE2"
                         CC="${MAKE}  -f Makefile CONF=Release.SSE2 clean"
                         OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libitclib.a">
-          </makeArtifact>
-          <makeArtifact PL="../ITCFramework"
-                        CT="3"
-                        CN="Debug"
-                        AC="true"
-                        BL="true"
-                        WD="../ITCFramework"
-                        BC="${MAKE}  -f Makefile CONF=Debug"
-                        CC="${MAKE}  -f Makefile CONF=Debug clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libitcframework.a">
           </makeArtifact>
           <makeArtifact PL="../utils"
                         CT="3"
@@ -121,7 +110,6 @@
           <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
           <incDir>
             <pElem>../ITCLib/include</pElem>
-            <pElem>../ITCFramework/include</pElem>
             <pElem>../utils/include</pElem>
             <pElem>.</pElem>
           </incDir>
@@ -143,9 +131,31 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
-          <commandlineTool>g++ -std=c++17 -pthread</commandlineTool>
-          <commandLine>-flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
+          <commandlineTool>g++</commandlineTool>
+          <commandLine>-std=c++17 -pthread -flto -lwolfssl -lpam -lmimalloc -lluajit-5.1 -lstdc++fs -lbz2</commandLine>
         </linkerTool>
+        <requiredProjects>
+          <makeArtifact PL="../ITCLib"
+                        CT="3"
+                        CN="Release.SSE2"
+                        AC="true"
+                        BL="true"
+                        WD="../ITCLib"
+                        BC="${MAKE}  -f Makefile CONF=Release.SSE2"
+                        CC="${MAKE}  -f Makefile CONF=Release.SSE2 clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libitclib.a">
+          </makeArtifact>
+          <makeArtifact PL="../utils"
+                        CT="3"
+                        CN="Debug"
+                        AC="true"
+                        BL="false"
+                        WD="../utils"
+                        BC="${MAKE}  -f utils-Makefile.mk CONF=Debug"
+                        CC="${MAKE}  -f utils-Makefile.mk CONF=Debug clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libutils.a">
+          </makeArtifact>
+        </requiredProjects>
       </compileType>
       <item path="LAR.h" ex="false" tool="3" flavor2="0">
       </item>
