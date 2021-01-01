@@ -33,8 +33,10 @@
 #include <vector>
 
 
-namespace wolf
+struct wolf
 {
+  typedef byte SHA1SUM[SHA_DIGEST_SIZE];
+  typedef byte SHA256SUM[SHA256_DIGEST_SIZE];
   
   static auto base64encode(const std::string_view src, std::string& out)
   {
@@ -65,7 +67,6 @@ namespace wolf
     return ret;
   }
   
-  typedef byte SHA1SUM[SHA_DIGEST_SIZE];
 
   static void sha1digest(const std::vector<uint8_t>& src, std::vector<uint8_t>& sum)
   {
@@ -97,9 +98,9 @@ namespace wolf
   }
   
   
-typedef byte SHA256SUM[SHA256_DIGEST_SIZE];
+
   
-static void sha256sum(const std::vector<uint8_t>& src, std::vector<uint8_t>& sum)
+  static void sha256sum(const std::vector<uint8_t>& src, std::vector<uint8_t>& sum)
   {
     SHA256SUM digest;
     sum.resize(SHA256_DIGEST_SIZE);
@@ -136,7 +137,7 @@ static void sha256sum(const std::vector<uint8_t>& src, std::vector<uint8_t>& sum
     wc_Sha256Final(&sha, sum);
   }
   
-}
+};
 
 #endif /* __WOLFCRYPTHACW_H__ */
 
